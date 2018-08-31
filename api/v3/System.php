@@ -40,6 +40,7 @@
  *   Input parameters.
  *   - triggers: bool, whether to drop/create SQL triggers; default: FALSE
  *   - session:  bool, whether to reset the CiviCRM session data; default: FALSE
+ *   - caseviews: bool, wheter to (re)create the case views; default: FALSE
  *
  * @return array
  */
@@ -48,6 +49,9 @@ function civicrm_api3_system_flush($params) {
     CRM_Utils_Array::value('triggers', $params, FALSE),
     CRM_Utils_Array::value('session', $params, FALSE)
   );
+  if (CRM_Utils_Array::value('caseviews', $params, FALSE)) {
+    CRM_Case_BAO_Case::createCaseViews();
+  }
   return civicrm_api3_create_success();
 }
 
@@ -68,6 +72,11 @@ function _civicrm_api3_system_flush_spec(&$params) {
   $params['session'] = array(
     'title' => 'Sessions',
     'description' => 'refresh sessions (boolean)',
+    'type' => CRM_Utils_Type::T_BOOLEAN,
+  );
+  $params['caseviews'] = array(
+    'title' => 'Case Views',
+    'description' => '(re)create case views (boolean)',
     'type' => CRM_Utils_Type::T_BOOLEAN,
   );
 }
