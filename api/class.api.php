@@ -12,7 +12,7 @@
  * or from any code on the same server as civicrm
  *
  * @code
- *   require_once('/your/civi/folder/api/class.api.php');
+ *
  *   // the path to civicrm.settings.php
  *   $api = new civicrm_api3 (array('conf_path'=> '/your/path/to/your/civicrm/or/joomla/site));
  * @endcode
