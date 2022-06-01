@@ -1091,9 +1091,10 @@ WHERE  id IN $groupIdString
       if ($dao->parents) {
         $parentArray = explode(',', $dao->parents);
         $parent = self::filterActiveGroups($parentArray);
-        if(array_key_exists($parent,$groupIDs)){
+        if (array_key_exists($parent, $groupIDs)) {
           $tree[$parent][] = $entry;
-        } else {
+        }
+        else {
           $roots[] = $entry;
         }
       }
