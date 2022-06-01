@@ -1082,23 +1082,23 @@ WHERE  id IN $groupIdString
           $description = $dao->frontend_description;
         }
       }
+      $entry = [
+        'id' => $dao->id,
+        'title' => empty($dao->saved_search_id) ? $title : '* ' . $title,
+        'visibility' => $dao->visibility,
+        'description' => $description,
+      ];
       if ($dao->parents) {
         $parentArray = explode(',', $dao->parents);
         $parent = self::filterActiveGroups($parentArray);
-        $tree[$parent][] = [
-          'id' => $dao->id,
-          'title' => empty($dao->saved_search_id) ? $title : '* ' . $title,
-          'visibility' => $dao->visibility,
-          'description' => $description,
-        ];
+        if(array_key_exists($parent,$groupIDs)){
+          $tree[$parent][] = $entry;
+        } else {
+          $roots[] = $entry;
+        }
       }
       else {
-        $roots[] = [
-          'id' => $dao->id,
-          'title' => empty($dao->saved_search_id) ? $title : '* ' . $title,
-          'visibility' => $dao->visibility,
-          'description' => $description,
-        ];
+        $roots[] = $entry;
       }
     }
 
